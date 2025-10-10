@@ -40,6 +40,7 @@ class UpgradeData implements UpgradeDataInterface
     public function upgrade(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
         $setup->startSetup();
+
         if (!$setup->getConnection()->tableColumnExists($setup->getTable('sales_order'), 'computop_payid')) {
             $salesInstaller = $this->salesSetupFactory->create(['resourceName' => 'sales_setup', 'setup' => $setup]);
             $salesInstaller->addAttribute(
@@ -48,6 +49,43 @@ class UpgradeData implements UpgradeDataInterface
                 ['type' => 'varchar', 'length' => 64, 'default' => '', 'grid' => true]
             );
         }
+
+        if (!$setup->getConnection()->tableColumnExists($setup->getTable('sales_order'), 'computop_pcnr')) {
+            $salesInstaller = $this->salesSetupFactory->create(['resourceName' => 'sales_setup', 'setup' => $setup]);
+            $salesInstaller->addAttribute(
+                'order',
+                'computop_pcnr',
+                ['type' => 'varchar', 'length' => 32, 'default' => '', 'grid' => true]
+            );
+        }
+
+        if (!$setup->getConnection()->tableColumnExists($setup->getTable('sales_order'), 'computop_ccexpiry')) {
+            $salesInstaller = $this->salesSetupFactory->create(['resourceName' => 'sales_setup', 'setup' => $setup]);
+            $salesInstaller->addAttribute(
+                'order',
+                'computop_ccexpiry',
+                ['type' => 'varchar', 'length' => 32, 'default' => '', 'grid' => true]
+            );
+        }
+
+        if (!$setup->getConnection()->tableColumnExists($setup->getTable('sales_order'), 'computop_ccbrand')) {
+            $salesInstaller = $this->salesSetupFactory->create(['resourceName' => 'sales_setup', 'setup' => $setup]);
+            $salesInstaller->addAttribute(
+                'order',
+                'computop_ccbrand',
+                ['type' => 'varchar', 'length' => 32, 'default' => '', 'grid' => true]
+            );
+        }
+
+        if (!$setup->getConnection()->tableColumnExists($setup->getTable('sales_order'), 'computop_cardholder')) {
+            $salesInstaller = $this->salesSetupFactory->create(['resourceName' => 'sales_setup', 'setup' => $setup]);
+            $salesInstaller->addAttribute(
+                'order',
+                'computop_cardholder',
+                ['type' => 'varchar', 'length' => 64, 'default' => '', 'grid' => true]
+            );
+        }
+
         $setup->endSetup();
     }
 }

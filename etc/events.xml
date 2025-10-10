@@ -15,4 +15,7 @@
     <event name="fatchip_computop_notify_authorized">
         <observer name="fatchip_computop_notify_authorized" instance="Fatchip\Nexi\Observer\Notify\Authorized" />
     </event>
+    <event name="fatchip_computop_notify_all">
+        <observer name="fatchip_computop_notify_all" instance="Fatchip\Nexi\Observer\Notify\All" />
+    </event>
 </config>

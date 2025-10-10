@@ -103,18 +103,10 @@ class CleanExpiredOrders
      */
     public function execute()
     {
-        error_log(date("Y-m-d H:i:s - ")."Cron Start".PHP_EOL, 3, BP."/cronjob.log");
         $expiredOrders = $this->getExpiredOrders();
-        error_log(date("Y-m-d H:i:s - ")."Got ".count($expiredOrders)." expired orders".PHP_EOL, 3, BP."/cronjob.log");
-
-        $inquireResponse = $this->inquireRequest->getPaymentStatusByTransId('000000071');
-        error_log(date("Y-m-d H:i:s - ")."Debug Inquire response ".print_r($inquireResponse, true).PHP_EOL, 3, BP."/cronjob.log");
-
         foreach ($expiredOrders as $order) {
             try {
-                error_log(date("Y-m-d H:i:s - ")."Check Increment Id ".$order['increment_id'].PHP_EOL, 3, BP."/cronjob.log");
                 $inquireResponse = $this->inquireRequest->getPaymentStatusByTransId($order['increment_id']);
-                error_log(date("Y-m-d H:i:s - ")."Inquire response ".print_r($inquireResponse, true).PHP_EOL, 3, BP."/cronjob.log");
                 if ($this->isPaymentStatusFailed($inquireResponse) === true) {
                     $this->orderManagement->cancel((int)$order['entity_id']);
                 }

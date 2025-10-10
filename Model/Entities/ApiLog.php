@@ -26,6 +26,9 @@ class ApiLog extends AbstractModel
         'billToCustomer',
         'userData',
         'ArticleList',
+        'shoppingBasket',
+        'items',
+        'vats',
         'Articlelist',
     ];
 

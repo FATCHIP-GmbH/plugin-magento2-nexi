@@ -13,3 +13,17 @@
 .easycredit-financing-info {
     margin: 1em 0 1em 0;
 }
+
+.ctRatepayLegalText, .ctRatepayMandateText {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.ctRatepayMandateTextBox {
+    border: 1px solid #ccc;
+    padding: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+}
