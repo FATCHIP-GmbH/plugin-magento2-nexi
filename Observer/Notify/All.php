@@ -1,8 +1,8 @@
 <?php
 
-namespace Fatchip\Computop\Observer\Notify;
+namespace Fatchip\Nexi\Observer\Notify;
 
-use Fatchip\Computop\Model\Method\BaseMethod;
+use Fatchip\Nexi\Model\Method\BaseMethod;
 use Magento\Sales\Model\Order;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer;
