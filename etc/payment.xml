@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<payment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Payment:etc/payment.xsd">
+    <groups>
+        <group id="nexi">
+            <label>Nexi Payment Methods</label>
+        </group>
+    </groups>
+    <methods>
+        <method name="computop_creditcard">
+            <allow_multiple_address>0</allow_multiple_address>
+        </method>
+        <method name="computop_directdebit">
+            <allow_multiple_address>0</allow_multiple_address>
+        </method>
+        <method name="computop_paypal">
+            <allow_multiple_address>0</allow_multiple_address>
+        </method>
+        <method name="computop_klarna">
+            <allow_multiple_address>0</allow_multiple_address>
+        </method>
+        <method name="computop_ideal">
+            <allow_multiple_address>0</allow_multiple_address>
+        </method>
+        <method name="computop_easycredit">
+            <allow_multiple_address>0</allow_multiple_address>
+        </method>
+        <method name="computop_amazonpay">
+            <allow_multiple_address>0</allow_multiple_address>
+        </method>
+        <method name="computop_ratepay_directdebit">
+            <allow_multiple_address>0</allow_multiple_address>
+        </method>
+        <method name="computop_ratepay_invoice">
+            <allow_multiple_address>0</allow_multiple_address>
+        </method>
+        <method name="computop_przelewy24">
+            <allow_multiple_address>0</allow_multiple_address>
+        </method>
+    </methods>
+</payment>

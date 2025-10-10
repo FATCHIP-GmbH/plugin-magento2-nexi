@@ -1,0 +1,64 @@
+<div class="payment-method" data-bind="css: {'_active': (getCode() == isChecked())}">
+    <div class="payment-method-title field choice">
+        <input type="radio"
+               name="payment[method]"
+               class="radio"
+               data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()"/>
+        <label data-bind="attr: {'for': getCode()}" class="label"><span data-bind="text: getTitle()"></span></label>
+    </div>
+
+    <div class="payment-method-content">
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <div class="payment-method-billing-address">
+            <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+
+        <!-- ko if: requestAccountHolder() -->
+            <form class="debit_form" id="debit_form" action="#" method="post" data-bind="attr: {id: getCode() + '_debit_form'}">
+                <fieldset data-bind="attr: {class: 'fieldset payment items ccard ' + getCode(), id: 'computop_form_przelewy24'}">
+                    <div class="field number required">
+                        <label data-bind="attr: {for: getCode() + '_accountholder'}" class="label">
+                            <span><!-- ko i18n: 'Account holder'--><!-- /ko --></span>
+                        </label>
+                        <div class="control">
+                            <input type="text" name="payment[accountholder]" class="input-text" value=""
+                                   data-bind="attr: {
+                                        autocomplete: off,
+                                        id: getCode() + '_accountholder',
+                                        title: $t('Account holder'),
+                                        'data-container': getCode() + '-accountholder'},
+                                  value: accountholder,
+                                  valueUpdate: 'keyup' "/>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        <!--/ko-->
+
+        <p data-bind="html: getInstructions()"></p>
+        <div class="checkout-agreements-block">
+            <!-- ko foreach: $parent.getRegion('before-place-order') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button class="action primary checkout"
+                        type="submit"
+                        data-bind="
+                        click: continueToComputop,
+                        attr: {title: $t('Place Order')},
+                        enable: (getCode() == isChecked()),
+                        css: {disabled: !isPlaceOrderActionAllowed()}
+                        "
+                        disabled>
+                    <span data-bind="i18n: 'Place Order'"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

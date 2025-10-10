@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @see \Fatchip\Nexi\Block\Adminhtml\Config\Form\Field\UpdateIdealBanks
+ */
+?>
+<script>
+    require(['prototype'], function(){
+
+//<![CDATA[
+        function updateIdealBanks() {
+            new Ajax.Request('<?php echo $block->getAjaxUrl() ?>', {
+                onSuccess: function(response) {
+                    try {
+                        if (response.responseText != 'false' && response.responseText.isJSON()) {
+                            response = response.responseText.evalJSON();
+                            if (response.success != true) {
+                                alert(response.errormessage);
+                            }
+                        } else {
+                            alert('<?php echo __('An unknown error occured'); ?>');
+                        }
+                    } catch (e) {
+                        alert('<?php echo __('An unknown error occured'); ?>');
+                    }
+                }
+            });
+        }
+
+        window.updateIdealBanks = updateIdealBanks;
+//]]>
+    });
+</script>
+<div class="actions actions-validate-vat">
+    <div id="validation_result" class="message-validation hidden"></div>
+    <button onclick="javascript:updateIdealBanks(); return false;" class="action-validate-vat" type="button" id="<?php echo $block->getHtmlId() ?>">
+        <span><?php echo $block->escapeHtml($block->getButtonLabel()) ?></span>
+    </button>
+</div>

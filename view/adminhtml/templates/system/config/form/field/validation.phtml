@@ -1,0 +1,12 @@
+<?php
+
+/**
+ * @see \Fatchip\Nexi\Block\Adminhtml\Config\Form\Field\Validation
+ */
+$validationError = $block->validateRefNrExtensions();
+?>
+<?php if (!empty($validationError)): ?>
+<span style="color: #dc3545;">
+    <?php echo $validationError; ?>
+</span>
+<?php endif; ?>

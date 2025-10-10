@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="computop_paypal" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>PayPal</label>
+        <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Enabled</label>
+            <config_path>payment/computop_paypal/active</config_path>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+        <field id="title" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Title</label>
+            <config_path>payment/computop_paypal/title</config_path>
+        </field>
+        <field id="express_active" translate="label" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>PayPal Express active</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+        <field id="express_livemode" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>PayPal Express Live Mode</label>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <depends>
+                <field id="express_active">1</field>
+            </depends>
+        </field>
+        <field id="paypal_account_id" translate="label,comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>PayPal Account ID</label>
+            <comment><![CDATA[Needed for PayPal Express]]></comment>
+            <depends>
+                <field id="express_active">1</field>
+            </depends>
+        </field>
+        <field id="paypal_client_id" translate="label,comment" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Client ID</label>
+            <comment><![CDATA[Needed for PayPal Express Live Mode, provided by Nexi]]></comment>
+            <depends>
+                <field id="express_active">1</field>
+                <field id="express_livemode">1</field>
+            </depends>
+        </field>
+        <field id="paypal_partner_attribution_id" translate="label,comment" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Partner Attribution ID</label>
+            <comment><![CDATA[Needed for PayPal Express Live Mode, provided by Nexi]]></comment>
+            <depends>
+                <field id="express_active">1</field>
+                <field id="express_livemode">1</field>
+            </depends>
+        </field>
+        <field id="capture_method" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Capture method</label>
+            <source_model>Fatchip\Nexi\Model\Source\CaptureMethods</source_model>
+        </field>
+        <field id="instructions" translate="label" type="textarea" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Instructions</label>
+            <config_path>payment/computop_paypal/instructions</config_path>
+        </field>
+        <field id="min_order_total" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Minimum Order Total</label>
+            <config_path>payment/computop_paypal/min_order_total</config_path>
+        </field>
+        <field id="max_order_total" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Maximum Order Total</label>
+            <config_path>payment/computop_paypal/max_order_total</config_path>
+        </field>
+        <field id="sort_order" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Sort Order</label>
+            <config_path>payment/computop_paypal/sort_order</config_path>
+        </field>
+    </group>
+</include>

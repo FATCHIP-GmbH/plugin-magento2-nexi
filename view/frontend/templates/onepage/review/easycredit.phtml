@@ -1,0 +1,38 @@
+<div class="paypal-review-title">
+    <strong><?php echo $block->escapeHtml(__('easyCredit conditions')); ?></strong>
+    <table class="easycredit-financing-info">
+        <tr>
+            <td width="40%"><?php echo __('Amount'); ?></td>
+            <td width="40%"><?php echo $block->getFinancingInfoValue('orderValue', true)." ".$block->getCurrency(); ?></td>
+        </tr>
+        <tr>
+            <td>+ <?php echo __('Interest'); ?>:</td>
+            <td><?php echo $block->getFinancingInfoValue('interest', true)." ".$block->getCurrency(); ?></td>
+        </tr>
+        <tr>
+            <td><b>= <?php echo __('Total amount'); ?>:</b></td>
+            <td><?php echo $block->getFinancingInfoValue('totalValue', true)." ".$block->getCurrency(); ?></td>
+        </tr>
+        <tr>
+            <td><?php echo __('Your monthly installment'); ?>:</td>
+            <td><?php echo $block->getFinancingInfoValue('installment', true)." ".$block->getCurrency(); ?></td>
+        </tr>
+        <tr>
+            <td><?php echo __('Last installment'); ?>:</td>
+            <td><?php echo $block->getFinancingInfoValue('lastInstallment', true)." ".$block->getCurrency(); ?></td>
+        </tr>
+        <tr>
+            <td><?php echo __('Interest rate p.a. for entire term'); ?>:</td>
+            <td><?php echo $block->getFinancingInfoValue('nominalInterest', true); ?>%</td>
+        </tr>
+        <tr>
+            <td><?php echo __('Effective interest rate'); ?>:</td>
+            <td><?php echo $block->getFinancingInfoValue('effectiveInterest', true); ?>%</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <?php echo $block->getFinancingInfoValue('amortizationPlanText'); ?>
+            </td>
+        </tr>
+    </table>
+</div>

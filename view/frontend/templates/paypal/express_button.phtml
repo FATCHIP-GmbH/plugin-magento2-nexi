@@ -1,0 +1,116 @@
+<div id="<?php echo $this->getButtonId(); ?>"></div>
+
+<script>
+    var ctPayPalAttempts = 0;
+
+    function loadPayPalScript() {
+        if (window.paypalJsLoaded === undefined || window.paypalJsLoaded !== true) {
+            require(['jquery'], function($) {
+                $("body").append("<script type=\"text/javascript\" src=\"<?php echo $this->getJavascriptUrl(); ?>\" data-partner-attribution-id=\"<?php echo $this->getPartnerAttributionId(); ?>\"><\/script>");
+            });
+            window.paypalJsLoaded = true;
+        }
+    }
+
+    function checkForPaypalObject(buttonId) {
+        if (ctPayPalAttempts > 10) {
+            return; // stop trying
+        }
+
+        if (typeof paypal != 'object') {
+            loadPayPalScript();
+            setTimeout(function() {
+                window.requestAnimationFrame(function() {checkForPaypalObject(buttonId)});
+            }, 250);
+        } else {
+            initPayPalButton(buttonId);
+        }
+        ctPayPalAttempts++;
+    }
+
+    function initPayPalButton(buttonId) {
+        if (document.getElementById(buttonId).childNodes.length > 0) { // buttons already loaded - abort
+            return;
+        }
+
+        let mid = "<?php echo $this->getMerchantId(); ?>";
+        var ppeLen = "<?php echo $this->getLenParam(); ?>";
+        var ppeData = "<?php echo $this->getDataParam(); ?>";
+        var quoteId = "<?php echo $this->getQuoteId(); ?>";
+        if (window.checkoutConfig === undefined) {
+            window.checkoutConfig = {};
+        }
+        if (window.checkoutConfig.storeCode === undefined) {
+            window.checkoutConfig.storeCode = '<?php echo $this->getStoreCode(); ?>';
+        }
+        let payid;
+
+        if (ppeLen != '' && ppeData != '') {
+            // Set the request parameter MerchantID, Len and Data
+            const params = new URLSearchParams({
+                MerchantID: mid,
+                Len: ppeLen,
+                Data: ppeData
+            });
+
+            // Render the PayPal button into #paypal-button-container
+            paypal.Buttons({
+                // Call your server to set up the transaction
+                createOrder: function(data, actions) {
+                    require(['Fatchip_Nexi/js/action/startpaypalexpress'], function(startpaypalexpress){
+                        startpaypalexpress(quoteId, ppeData, ppeLen);
+                    });
+                    return fetch('https://www.computop-paygate.com/ExternalServices/paypalorders.aspx', {
+                        method: 'POST',
+                        body: params
+                    }).then(function (res) {
+                        return res.text();
+                    }).then(function(orderData) {
+                        let qData = new URLSearchParams(orderData)
+                        payid = qData.get('PayID');
+                        return qData.get('orderid');
+                    });
+                },
+                // Call cbPayPal.aspx for continue sequence
+                onApprove: function (data, actions) {
+                    var rd = "MerchantId=" + mid + "&PayId=" + payid + "&OrderId=" + data.orderID;
+                    // Build an invisible form and directly submit it
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = 'https://www.computop-paygate.com/cbPayPal.aspx?rd=' + window.btoa(rd);
+                    form.style.display = 'none';
+                    // Add form to body
+                    document.body.appendChild(form);
+                    // Submit form
+                    form.submit();
+                },
+                onCancel: function (data, actions) {
+                    var rd = "MerchantId=" + mid + "&PayId=" + payid + "&OrderId=" + data.orderID;
+                    // Build an invisible form and directly submit it
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = "https://www.computop-paygate.com/cbPayPal.aspx?rd=" + window.btoa(rd) + "&ua=cancel&token=" + data.orderID;
+                    form.style.display = 'none';
+                    // Add form to body
+                    document.body.appendChild(form);
+                    // Submit form
+                    form.submit();
+                },
+                onError: function (data, actions) {
+                    var rd = "MerchantId=" + mid + "&PayId=" + payid + "&OrderId=" + data.orderID;
+                    // Build an invisible form and directly submit it
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = "https://www.computop-paygate.com/cbPayPal.aspx?rd=" + window.btoa(rd) + "&ua=cancel&token=" + data.orderID;
+                    form.style.display = 'none';
+                    // Add form to body
+                    document.body.appendChild(form);
+                    // Submit form
+                    form.submit();
+                }
+            }).render('#' + buttonId);
+        }
+    }
+
+    checkForPaypalObject('<?php echo $this->getButtonId(); ?>');
+</script>

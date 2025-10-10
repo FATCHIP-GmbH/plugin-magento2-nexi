@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="computop_przelewy24" translate="label" type="text" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>Przelewy24</label>
+        <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Enabled</label>
+            <config_path>payment/computop_przelewy24/active</config_path>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+        <field id="title" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Title</label>
+            <config_path>payment/computop_przelewy24/title</config_path>
+        </field>
+        <field id="service" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Service</label>
+            <source_model>Fatchip\Nexi\Model\Source\Service</source_model>
+        </field>
+        <field id="ppro_channel" translate="label,tooltip" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Configuration channel of the PPRO contract</label>
+            <tooltip>Optional. If given, it may overwrite channels stored in the Nexi system.</tooltip>
+            <depends>
+                <field id="service">ppro</field>
+            </depends>
+        </field>
+        <field id="instructions" translate="label" type="textarea" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Instructions</label>
+            <config_path>payment/computop_przelewy24/instructions</config_path>
+        </field>
+        <field id="min_order_total" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Minimum Order Total</label>
+            <config_path>payment/computop_przelewy24/min_order_total</config_path>
+        </field>
+        <field id="max_order_total" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Maximum Order Total</label>
+            <config_path>payment/computop_przelewy24/max_order_total</config_path>
+        </field>
+        <field id="sort_order" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Sort Order</label>
+            <config_path>payment/computop_przelewy24/sort_order</config_path>
+        </field>
+    </group>
+</include>

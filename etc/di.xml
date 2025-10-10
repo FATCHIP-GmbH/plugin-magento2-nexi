@@ -1,0 +1,339 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- START - REST API PREFERENCES -->
+    <preference for="Fatchip\Nexi\Api\CreditcardRequestDataInterface" type="Fatchip\Nexi\Service\V1\CreditcardRequestData" />
+    <preference for="Fatchip\Nexi\Api\Data\CreditcardRequestDataResponseInterface" type="Fatchip\Nexi\Service\V1\Data\CreditcardRequestDataResponse" />
+    <preference for="Fatchip\Nexi\Api\StartPayPalExpressInterface" type="Fatchip\Nexi\Service\V1\StartPayPalExpress" />
+    <preference for="Fatchip\Nexi\Api\Data\StartPayPalExpressResponseInterface" type="Fatchip\Nexi\Service\V1\Data\StartPayPalExpressResponse" />
+    <preference for="Fatchip\Nexi\Api\AmazonPayInterface" type="Fatchip\Nexi\Service\V1\AmazonPay" />
+    <preference for="Fatchip\Nexi\Api\Data\AmazonPayResponseInterface" type="Fatchip\Nexi\Service\V1\Data\AmazonPayResponse" />
+    <!-- END - REST API PREFERENCES -->
+
+    <!-- START - PAYMENT CONFIG -->
+    <type name="Fatchip\Nexi\Model\Method\BaseMethod">
+        <arguments>
+            <!-- code is set for 2.4.7 compatibility - code is set to correct value in the constructor -->
+            <argument name="code" xsi:type="string">Fatchip\Nexi\Model\ComputopConfig::METHOD_CREDITCARD</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\Info</argument>
+        </arguments>
+    </type>
+
+    <!-- START - EVERY PAYMENT METHOD NEEDS ONE IF THESE BLOCKS... -->
+    <!-- Creditcard Config Handler -->
+    <type name="Fatchip\Nexi\Model\Method\Creditcard">
+        <arguments>
+            <argument name="valueHandlerPool" xsi:type="object">ComputopValueHandlerPoolCreditcard</argument>
+        </arguments>
+    </type>
+    <virtualType name="ComputopValueHandlerPoolCreditcard" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">ComputopConfigValueHandlerCreditcard</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopConfigValueHandlerCreditcard" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">ComputopCreditcardVaultPaymentConfigCreditcard</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopCreditcardVaultPaymentConfigCreditcard" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Fatchip\Nexi\Model\ComputopConfig::METHOD_CREDITCARD</argument>
+        </arguments>
+    </virtualType>
+    <!-- END - EVERY PAYMENT METHOD NEEDS ONE IF THESE BLOCKS... -->
+
+    <!-- Direct Debit Config Handler -->
+    <type name="Fatchip\Nexi\Model\Method\DirectDebit">
+        <arguments>
+            <argument name="valueHandlerPool" xsi:type="object">ComputopValueHandlerPoolDirectDebit</argument>
+        </arguments>
+    </type>
+    <virtualType name="ComputopValueHandlerPoolDirectDebit" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">ComputopConfigValueHandlerDirectDebit</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopConfigValueHandlerDirectDebit" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">ComputopCreditcardVaultPaymentConfigDirectDebit</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopCreditcardVaultPaymentConfigDirectDebit" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Fatchip\Nexi\Model\ComputopConfig::METHOD_DIRECTDEBIT</argument>
+        </arguments>
+    </virtualType>
+    <!-- PayPal Config Handler -->
+    <type name="Fatchip\Nexi\Model\Method\PayPal">
+        <arguments>
+            <argument name="valueHandlerPool" xsi:type="object">ComputopValueHandlerPoolPayPal</argument>
+        </arguments>
+    </type>
+    <virtualType name="ComputopValueHandlerPoolPayPal" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">ComputopConfigValueHandlerPayPal</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopConfigValueHandlerPayPal" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">ComputopCreditcardVaultPaymentConfigPayPal</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopCreditcardVaultPaymentConfigPayPal" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Fatchip\Nexi\Model\ComputopConfig::METHOD_PAYPAL</argument>
+        </arguments>
+    </virtualType>
+    <!-- Klarna Config Handler -->
+    <type name="Fatchip\Nexi\Model\Method\Klarna">
+        <arguments>
+            <argument name="valueHandlerPool" xsi:type="object">ComputopValueHandlerPoolKlarna</argument>
+        </arguments>
+    </type>
+    <virtualType name="ComputopValueHandlerPoolKlarna" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">ComputopConfigValueHandlerKlarna</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopConfigValueHandlerKlarna" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">ComputopCreditcardVaultPaymentConfigKlarna</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopCreditcardVaultPaymentConfigKlarna" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Fatchip\Nexi\Model\ComputopConfig::METHOD_KLARNA</argument>
+        </arguments>
+    </virtualType>
+    <!-- Ideal Config Handler -->
+    <type name="Fatchip\Nexi\Model\Method\Ideal">
+        <arguments>
+            <argument name="valueHandlerPool" xsi:type="object">ComputopValueHandlerPoolIdeal</argument>
+        </arguments>
+    </type>
+    <virtualType name="ComputopValueHandlerPoolIdeal" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">ComputopConfigValueHandlerIdeal</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopConfigValueHandlerIdeal" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">ComputopCreditcardVaultPaymentConfigIdeal</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopCreditcardVaultPaymentConfigIdeal" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Fatchip\Nexi\Model\ComputopConfig::METHOD_IDEAL</argument>
+        </arguments>
+    </virtualType>
+    <!-- easyCredit Config Handler -->
+    <type name="Fatchip\Nexi\Model\Method\EasyCredit">
+        <arguments>
+            <argument name="valueHandlerPool" xsi:type="object">ComputopValueHandlerPoolEasyCredit</argument>
+        </arguments>
+    </type>
+    <virtualType name="ComputopValueHandlerPoolEasyCredit" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">ComputopConfigValueHandlerEasyCredit</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopConfigValueHandlerEasyCredit" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">ComputopCreditcardVaultPaymentConfigEasyCredit</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopCreditcardVaultPaymentConfigEasyCredit" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Fatchip\Nexi\Model\ComputopConfig::METHOD_EASYCREDIT</argument>
+        </arguments>
+    </virtualType>
+    <!-- Amazon Pay Config Handler -->
+    <type name="Fatchip\Nexi\Model\Method\AmazonPay">
+        <arguments>
+            <argument name="valueHandlerPool" xsi:type="object">ComputopValueHandlerPoolAmazonPay</argument>
+        </arguments>
+    </type>
+    <virtualType name="ComputopValueHandlerPoolAmazonPay" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">ComputopConfigValueHandlerAmazonPay</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopConfigValueHandlerAmazonPay" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">ComputopCreditcardVaultPaymentConfigAmazonPay</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopCreditcardVaultPaymentConfigAmazonPay" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Fatchip\Nexi\Model\ComputopConfig::METHOD_AMAZONPAY</argument>
+        </arguments>
+    </virtualType>
+    <!-- Ratepay Direct Debit Config Handler -->
+    <type name="Fatchip\Nexi\Model\Method\Ratepay\DirectDebit">
+        <arguments>
+            <argument name="valueHandlerPool" xsi:type="object">ComputopValueHandlerPoolRatepayDirectDebit</argument>
+        </arguments>
+    </type>
+    <virtualType name="ComputopValueHandlerPoolRatepayDirectDebit" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">ComputopConfigValueHandlerRatepayDirectDebit</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopConfigValueHandlerRatepayDirectDebit" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">ComputopCreditcardVaultPaymentConfigRatepayDirectDebit</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopCreditcardVaultPaymentConfigRatepayDirectDebit" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Fatchip\Nexi\Model\ComputopConfig::METHOD_RATEPAY_DIRECTDEBIT</argument>
+        </arguments>
+    </virtualType>
+    <!-- Ratepay Invoice Config Handler -->
+    <type name="Fatchip\Nexi\Model\Method\Ratepay\Invoice">
+        <arguments>
+            <argument name="valueHandlerPool" xsi:type="object">ComputopValueHandlerPoolRatepayInvoice</argument>
+        </arguments>
+    </type>
+    <virtualType name="ComputopValueHandlerPoolRatepayInvoice" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">ComputopConfigValueHandlerRatepayInvoice</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopConfigValueHandlerRatepayInvoice" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">ComputopCreditcardVaultPaymentConfigRatepayInvoice</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopCreditcardVaultPaymentConfigRatepayInvoice" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Fatchip\Nexi\Model\ComputopConfig::METHOD_RATEPAY_INVOICE</argument>
+        </arguments>
+    </virtualType>
+    <!-- Przelewy24 Config Handler -->
+    <type name="Fatchip\Nexi\Model\Method\Przelewy24">
+        <arguments>
+            <argument name="valueHandlerPool" xsi:type="object">ComputopValueHandlerPoolPrzelewy24</argument>
+        </arguments>
+    </type>
+    <virtualType name="ComputopValueHandlerPoolPrzelewy24" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">ComputopConfigValueHandlerPrzelewy24</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopConfigValueHandlerPrzelewy24" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">ComputopCreditcardVaultPaymentConfigPrzelewy24</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopCreditcardVaultPaymentConfigPrzelewy24" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Fatchip\Nexi\Model\ComputopConfig::METHOD_PRZELEWY24</argument>
+        </arguments>
+    </virtualType>
+    <!-- END - PAYMENT CONFIG -->
+
+    <!-- START - Session proxies -->
+    <type name="Fatchip\Nexi\Model\Method\BaseMethod">
+        <arguments>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Fatchip\Nexi\Model\ConfigProvider">
+        <arguments>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="\Fatchip\Nexi\Model\Method\Ideal">
+        <arguments>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="\Fatchip\Nexi\Model\Method\Klarna">
+        <arguments>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="\Fatchip\Nexi\Model\Method\RedirectPayment">
+        <arguments>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Fatchip\Nexi\Controller\Onepage\Returned">
+        <arguments>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Fatchip\Nexi\Controller\Onepage\Redirect">
+        <arguments>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Fatchip\Nexi\Controller\Onepage\Failure">
+        <arguments>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Fatchip\Nexi\Controller\Onepage\Payment">
+        <arguments>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Fatchip\Nexi\Block\Paypal\InitScript">
+        <arguments>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Fatchip\Nexi\Block\Onepage\Iframe">
+        <arguments>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Fatchip\Nexi\Service\V1\CreditcardRequestData">
+        <arguments>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <!-- END - Session proxies -->
+
+    <virtualType name="Fatchip\Nexi\Model\ResourceModel\ApiLog\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">nexi_api_log</argument>
+            <argument name="resourceModel" xsi:type="string">Fatchip\Nexi\Model\ResourceModel\ApiLog</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="nexi_api_log_grid_data_source" xsi:type="string">Fatchip\Nexi\Model\ResourceModel\ApiLog\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Session\SessionStartChecker">
+        <plugin name="computop_redirect_session_checker" type="Fatchip\Nexi\Plugin\RedirectSessionChecker"/>
+    </type>
+    <type name="Magento\Sales\Model\Service\CreditmemoService">
+        <plugin name="computop_payment_plugin_creditmemoservice" type="Fatchip\Nexi\Plugin\CreditmemoService" sortOrder="1" />
+    </type>
+</config>

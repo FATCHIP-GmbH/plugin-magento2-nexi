@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd">
+    <policies>
+        <policy id="img-src">
+            <values>
+                <value id="computop_amazon_media" type="host">m.media-amazon.com</value>
+                <value id="computop_amazon_static" type="host">static-eu.payments-amazon.com</value>
+            </values>
+        </policy>
+        <policy id="script-src">
+            <values>
+                <value id="computop_amazon" type="host">static-eu.payments-amazon.com</value>
+            </values>
+        </policy>
+        <policy id="connect-src">
+            <values>
+                <value id="computop_connect_src" type="host">www.computop-paygate.com</value>
+                <value id="computop_amazon_pay" type="host">payments-eu.amazon.com</value>
+            </values>
+        </policy>
+        <policy id="frame-src">
+            <values>
+                <value id="computop_creditcard_frame" type="host">www.computop-paygate.com</value>
+            </values>
+        </policy>
+    </policies>
+</csp_whitelist>

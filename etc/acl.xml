@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Fatchip_Nexi::nexi" title="Nexi" sortOrder="500">
+                    <resource id="Fatchip_Nexi::nexi_configuration" title="Configuration" sortOrder="10">
+                        <resource id="Fatchip_Nexi::nexi_configuration_general" title="General" sortOrder="10" />
+                        <resource id="Fatchip_Nexi::nexi_configuration_payment" title="Payment" sortOrder="20" />
+                    </resource>
+                    <resource id="Fatchip_Nexi::nexi_api" title="Logs" sortOrder="20">
+                        <resource id="Fatchip_Nexi::nexi_api_log" title="Api" sortOrder="10" />
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

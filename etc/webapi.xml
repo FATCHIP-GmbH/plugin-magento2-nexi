@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/guest-carts/:orderId/computop-creditcardRequestData" method="POST">
+        <service class="Fatchip\Nexi\Api\CreditcardRequestDataInterface" method="getCreditcardRequestData"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
+    <route url="/V1/carts/mine/computop-creditcardRequestData" method="POST">
+        <service class="Fatchip\Nexi\Api\CreditcardRequestDataInterface" method="getCreditcardRequestData"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="orderId" force="true">%order_id%</parameter>
+        </data>
+    </route>
+
+    <route url="/V1/guest-carts/:orderId/computop-getAmazonPayApbSession" method="POST">
+        <service class="Fatchip\Nexi\Api\AmazonPayInterface" method="getAmazonPayApbSession"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
+    <route url="/V1/carts/mine/computop-getAmazonPayApbSession" method="POST">
+        <service class="Fatchip\Nexi\Api\AmazonPayInterface" method="getAmazonPayApbSession"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="orderId" force="true">%order_id%</parameter>
+        </data>
+    </route>
+
+    <route url="/V1/guest-carts/:cartId/computop-startPayPalExpress" method="POST">
+        <service class="Fatchip\Nexi\Api\StartPayPalExpressInterface" method="start"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+
+    <route url="/V1/carts/mine/computop-startPayPalExpress" method="POST">
+        <service class="Fatchip\Nexi\Api\StartPayPalExpressInterface" method="start"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="cartId" force="true">%cartId%</parameter>
+        </data>
+    </route>
+</routes>

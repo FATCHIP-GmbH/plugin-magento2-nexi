@@ -1,0 +1,65 @@
+<?php
+
+$apiLog = $block->getApiLogEntry();
+
+?>
+<?php if (!$apiLog): ?>
+    <?php echo __('The requested API-Log entry is not existing!'); ?>
+<?php else: ?>
+    <div data-mage-init='{"floatingHeader": {}}' class="page-actions"><?php echo $block->getButtonsHtml() ?></div>
+    <section class="admin__page-section  order-view-account-information">
+        <div class="admin__page-section-content">
+            <?php if (!empty($apiLog->getRequestDetails())): ?>
+                <div class="admin__page-section-item">
+                    <div class="admin__page-section-item-title">
+                        <span class="title"><?php echo __('Request'); ?></span>
+                    </div>
+                    <div class="admin__page-section-item-content">
+                        <table class="admin__table-secondary order-information-table">
+                            <tbody>
+                            <?php foreach ($apiLog->getRequestDetails() as $key => $value): ?>
+                                <tr>
+                                    <th style="width: 170px;"><?php echo $key; ?></th>
+                                    <td style="text-align:left;">
+                                        <?php if (is_array($value)): ?>
+                                            DECODED:<pre><?php print_r($value); ?></pre>
+                                        <?php else: ?>
+                                            <?php echo $value; ?>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            <?php endif; ?>
+            <?php if (!empty($apiLog->getResponseDetails())): ?>
+                <hr style="margin: 2em 0 2em 0;">
+                <div class="admin__page-section-item">
+                    <div class="admin__page-section-item-title">
+                        <span class="title"><?php echo __('Response'); ?></span>
+                    </div>
+                    <div class="admin__page-section-item-content">
+                        <table class="admin__table-secondary order-account-information-table">
+                            <tbody>
+                            <?php foreach ($apiLog->getResponseDetails() as $key => $value): ?>
+                                <tr>
+                                    <th style="width: 170px;"><?php echo $key; ?></th>
+                                    <td style="text-align:left;">
+                                        <?php if (is_array($value)): ?>
+                                            DECODED:<pre><?php print_r($value); ?></pre>
+                                        <?php else: ?>
+                                            <?php echo $value; ?>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+    </section>
+<?php endif; ?>

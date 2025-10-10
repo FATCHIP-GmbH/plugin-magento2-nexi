@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="nexi" translate="label" sortOrder="1000000">
+            <label>Nexi</label>
+        </tab>
+        <section id="computop_general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>General</label>
+            <tab>nexi</tab>
+            <resource>Fatchip_Nexi::nexi_configuration_general</resource>
+            <group id="global" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Global</label>
+                <field id="version" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Module version</label>
+                    <frontend_model>Fatchip\Nexi\Block\Adminhtml\Config\Form\Field\ModuleVersion</frontend_model>
+                </field>
+                <field id="merchantid" translate="label,tooltip" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>MerchantID</label>
+                    <tooltip>Your MerchantID</tooltip>
+                </field>
+                <field id="mac" translate="label,tooltip" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>HMAC-Key</label>
+                    <tooltip>Your HMAC key</tooltip>
+                </field>
+                <field id="encryption" translate="label" type="select" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Encryption mode</label>
+                    <source_model>Fatchip\Nexi\Model\Source\EncryptionMode</source_model>
+                </field>
+                <field id="password" translate="label,tooltip" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Password</label>
+                    <tooltip>Your encryption password</tooltip>
+                </field>
+                <!--NO CONNECTION TO REST API AS OF NOW field id="restapikey" translate="label,tooltip" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>REST-API key</label>
+                    <tooltip>Your REST-API key</tooltip>
+                </field-->
+                <field id="ordernr_prefix" translate="label,tooltip" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Order number prefix</label>
+                    <tooltip>Prefix for order number</tooltip>
+                </field>
+                <field id="ordernr_suffix" translate="label,tooltip" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Order number suffix</label>
+                    <tooltip>Suffix for order number</tooltip>
+                </field>
+                <field id="cronjob_pending_lifetime" translate="label,tooltip" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Pending Payment Order Lifetime (minutes)</label>
+                    <tooltip>Pending orders will be canceled if no Notify call happened after X minutes.</tooltip>
+                </field>
+                <field id="ordernr_validation" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label> </label>
+                    <frontend_model>Fatchip\Nexi\Block\Adminhtml\Config\Form\Field\Validation</frontend_model>
+                </field>
+            </group>
+        </section>
+        <section id="computop_payment" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Payment</label>
+            <tab>nexi</tab>
+            <resource>Fatchip_Nexi::nexi_configuration_payment</resource>
+            <include path="Fatchip_Nexi::system/computop_creditcard.xml"/>
+            <include path="Fatchip_Nexi::system/computop_directdebit.xml"/>
+            <include path="Fatchip_Nexi::system/computop_paypal.xml"/>
+            <include path="Fatchip_Nexi::system/computop_klarna.xml"/>
+            <include path="Fatchip_Nexi::system/computop_ideal.xml"/>
+            <include path="Fatchip_Nexi::system/computop_easycredit.xml"/>
+            <include path="Fatchip_Nexi::system/computop_amazonpay.xml"/>
+            <include path="Fatchip_Nexi::system/computop_ratepay_directdebit.xml"/>
+            <include path="Fatchip_Nexi::system/computop_ratepay_invoice.xml"/>
+            <include path="Fatchip_Nexi::system/computop_przelewy24.xml"/>
+        </section>
+    </system>
+</config>

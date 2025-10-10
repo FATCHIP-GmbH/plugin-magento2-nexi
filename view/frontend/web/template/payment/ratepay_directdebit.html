@@ -1,0 +1,166 @@
+<div class="payment-method" data-bind="css: {'_active': (getCode() == isChecked())}">
+    <div class="payment-method-title field choice">
+        <input type="radio"
+               name="payment[method]"
+               class="radio"
+               data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()"/>
+        <label data-bind="attr: {'for': getCode()}" class="label"><span data-bind="text: getTitle()"></span></label>
+    </div>
+
+    <div class="payment-method-content">
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <div class="payment-method-billing-address">
+            <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+
+        <form class="debit_form" id="debit_form" action="#" method="post" data-bind="attr: {id: getCode() + '_debit_form'}">
+            <fieldset data-bind="attr: {class: 'fieldset payment items ccard ' + getCode(), id: 'computop_form_debit'}">
+                <div class="field number required">
+                    <label data-bind="attr: {for: getCode() + '_accountholder'}" class="label">
+                        <span><!-- ko i18n: 'Account holder'--><!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <input type="text" name="payment[accountholder]" class="input-text" value=""
+                               data-bind="attr: {
+                                    autocomplete: off,
+                                    id: getCode() + '_accountholder',
+                                    title: $t('Account holder'),
+                                    'data-container': getCode() + '-accountholder'},
+                              value: accountholder,
+                              valueUpdate: 'keyup' "/>
+                    </div>
+                </div>
+
+                <div class="field number required">
+                    <label data-bind="attr: {for: getCode() + '_iban'}" class="label">
+                        <span><!-- ko i18n: 'IBAN'--><!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <input type="text" name="payment[iban]" class="input-text" value=""
+                               data-bind="attr: {
+                                    autocomplete: off,
+                                    id: getCode() + '_iban',
+                                    title: $t('IBAN'),
+                                    'data-container': getCode() + '-iban'},
+                              value: iban,
+                              valueUpdate: 'keyup' "/>
+                    </div>
+                </div>
+
+                <!-- ko if: isBicNeeded() -->
+                <div class="field number required">
+                    <label data-bind="attr: {for: getCode() + '_bic'}" class="label">
+                        <span><!-- ko i18n: 'BIC'--><!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <input type="text" name="payment[bic]" class="input-text" value=""
+                               data-bind="attr: {
+                                    autocomplete: off,
+                                    id: getCode() + '_bic',
+                                    title: $t('BIC'),
+                                    'data-container': getCode() + '-bic'},
+                              value: bic,
+                              valueUpdate: 'keyup' "/>
+                    </div>
+                </div>
+                <!--/ko-->
+                <!-- ko if: isTelephoneNumberNeeded() -->
+                <div class="field number required">
+                    <label data-bind="attr: {for: getCode() + '_telephone'}" class="label">
+                        <span><!-- ko i18n: 'Telephone'--><!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <input type="text" name="payment[telephone]" class="input-text" value=""
+                               data-bind="attr: {
+                                    autocomplete: 'off',
+                                    id: getCode() + '_telephone',
+                                    title: $t('Telephone'),
+                                    'data-container': getCode() + '-telephone'},
+                              value: telephone,
+                              valueUpdate: 'keyup' "/>
+                    </div>
+                </div>
+                <!--/ko-->
+                <!-- ko if: isBirthdayNeeded() -->
+                <div class="field number required">
+                    <label data-bind="attr: {for: getCode() + '_birthday'}" class="label">
+                        <span><!-- ko i18n: 'Birthday'--><!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <input type="text" name="payment[birthday]" class="input-text" value=""
+                               style="width:auto;margin-right:10px;"
+                               size="3" maxlength="2"
+                               data-bind="attr: {
+                                    autocomplete: 'off',
+                                    id: getCode() + '_birthday',
+                                    title: $t('Day of birth'),
+                                    'data-container': getCode() + '-birthday'},
+                              value: birthday,
+                              valueUpdate: 'keyup' "/>
+                        <input type="text" name="payment[birthmonth]" class="input-text" value=""
+                               style="width:auto;margin-right:10px;"
+                               size="3" maxlength="2"
+                               data-bind="attr: {
+                                    autocomplete: 'off',
+                                    id: getCode() + '_birthmonth',
+                                    title: $t('Month of birth'),
+                                    'data-container': getCode() + '-birthmonth'},
+                              value: birthmonth,
+                              valueUpdate: 'keyup' "/>
+                        <input type="text" name="payment[birthyear]" class="input-text" value=""
+                               style="width:auto;margin-right:10px;"
+                               size="8" maxlength="4"
+                               data-bind="attr: {
+                                    autocomplete: 'off',
+                                    id: getCode() + '_birthyear',
+                                    title: $t('Year of birth'),
+                                    'data-container': getCode() + '-birthyear'},
+                              value: birthyear,
+                              valueUpdate: 'keyup' "/> <!-- ko i18n: '(DD.MM.YYYY)'--><!-- /ko -->
+                    </div>
+                </div>
+                <!--/ko-->
+            </fieldset>
+        </form>
+
+        <p data-bind="html: getInstructions()"></p>
+        <div class="ctRatepayLegalText">
+            <!-- ko i18n: 'With selection of this payment method you agree to the'--><!-- /ko -->
+            <a href='//www.ratepay.com/legal-payment-dataprivacy' title='Legal terms - Ratepay' target='_blank' style='text-decoration: underline; cursor: pointer'><!-- ko i18n: 'terms of payment of our payment partner'--><!-- /ko --></a>
+            <!-- ko i18n: 'as well as to the performance of a'--><!-- /ko -->
+            <a href='//www.ratepay.com/en/ratepay-data-privacy-statement' title='Legal data privacy - Ratepay' target='_blank' style='text-decoration: underline; cursor: pointer'><!-- ko i18n: 'risk check by our payment partner'--><!-- /ko --></a>.
+        </div>
+        <div class="ctRatepayMandateText">
+            <input type="checkbox" data-bind="attr: {id: getCode() + '_save_sepa_accepted'}, checked: sepaAccepted">
+            <label data-bind="attr: {for: getCode() + '_save_sepa_accepted'}" class="label"><!-- ko i18n: 'Accept'--><!-- /ko --> <a data-bind="click: toggleMandateText"><!-- ko i18n: 'SEPA Direct Debit Mandate (Click to show)'--><!-- /ko --></a></label>
+            <div data-bind="attr: {id: getCode() + '_sepa_mandate_text'}" style="display:none" class="ctRatepayMandateTextBox">
+                <!-- ko i18n: 'By agreeing to the SEPA Direct Debit Mandate, you authorise Ratepay GmbH to collect payments from your account by direct debit. At the same time, you instruct your bank to debit your account in accordance with the instructions from Ratepay GmbH. Note: As part of your rights, you are entitled to a refund from your bank. A refund must be claimed within 8 weeks, starting from the date on which your account was debited. The terms and conditions of your bank apply. The mandate reference and creditor identification number will be communicated to you separately.'--><!-- /ko -->
+            </div>
+        </div>
+        <div class="checkout-agreements-block">
+            <!-- ko foreach: $parent.getRegion('before-place-order') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button class="action primary checkout"
+                        type="submit"
+                        data-bind="
+                        click: placeOrder,
+                        attr: {title: $t('Place Order')},
+                        enable: (getCode() == isChecked()),
+                        css: {disabled: !isPlaceOrderActionAllowed()}
+                        "
+                        disabled>
+                    <span data-bind="i18n: 'Place Order'"></span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<script>
+    <?php if($this->isIframeMode() === true): ?>
+        window.top.location.href = "<?php echo $this->getBreakoutUrl(); ?>?Len=<?php echo $this->getLenParam(); ?>&Data=<?php echo $this->getDataParam(); ?>";
+    <?php else: ?>
+        var form = document.createElement("form");
+        form.setAttribute('method',"post");
+        form.setAttribute('action',"<?php echo $this->getBreakoutUrl(); ?>");
+
+        var len = document.createElement("input");
+        len.setAttribute('type',"hidden");
+        len.setAttribute('name',"Len");
+        len.setAttribute('value',"<?php echo $this->getLenParam(); ?>");
+
+        var data = document.createElement("input");
+        data.setAttribute('type',"hidden");
+        data.setAttribute('name',"Data");
+        data.setAttribute('value',"<?php echo $this->getDataParam(); ?>");
+
+        form.appendChild(len);
+        form.appendChild(data);
+
+        document.getElementsByTagName('body')[0].appendChild(form);
+        form.submit();
+    <?php endif; ?>
+</script>

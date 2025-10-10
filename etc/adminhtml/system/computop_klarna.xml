@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="computop_klarna" translate="label" type="text" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>Klarna</label>
+        <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Enabled</label>
+            <config_path>payment/computop_klarna/active</config_path>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+        </field>
+        <field id="title" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Title</label>
+            <config_path>payment/computop_klarna/title</config_path>
+        </field>
+        <field id="klarna_account" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Klarna Account</label>
+        </field>
+        <field id="instructions" translate="label" type="textarea" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Instructions</label>
+            <config_path>payment/computop_klarna/instructions</config_path>
+        </field>
+        <field id="min_order_total" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Minimum Order Total</label>
+            <config_path>payment/computop_klarna/min_order_total</config_path>
+        </field>
+        <field id="max_order_total" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Maximum Order Total</label>
+            <config_path>payment/computop_klarna/max_order_total</config_path>
+        </field>
+        <field id="sort_order" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Sort Order</label>
+            <config_path>payment/computop_klarna/sort_order</config_path>
+        </field>
+    </group>
+</include>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Fatchip_Nexi::nexi" title="Nexi" module="Fatchip_Nexi" sortOrder="79" resource="Fatchip_Nexi::nexi"/>
+        <add id="Fatchip_Nexi::nexi_configuration" title="Configuration" module="Fatchip_Nexi" sortOrder="20" parent="Fatchip_Nexi::nexi" resource="Fatchip_Nexi::nexi_configuration"/>
+        <add id="Fatchip_Nexi::nexi_configuration_general" title="General" module="Fatchip_Nexi" sortOrder="10" parent="Fatchip_Nexi::nexi_configuration" action="adminhtml/system_config/edit/section/computop_general" resource="Fatchip_Nexi::nexi_configuration_general"/>
+        <add id="Fatchip_Nexi::nexi_configuration_payment" title="Payment" module="Fatchip_Nexi" sortOrder="20" parent="Fatchip_Nexi::nexi_configuration" action="adminhtml/system_config/edit/section/computop_payment" resource="Fatchip_Nexi::nexi_configuration_payment"/>
+        <add id="Fatchip_Nexi::nexi_api" title="Logs" module="Fatchip_Nexi" sortOrder="30" parent="Fatchip_Nexi::nexi" resource="Fatchip_Nexi::nexi_api"/>
+        <add id="Fatchip_Nexi::nexi_api_log" title="Api" module="Fatchip_Nexi" sortOrder="40" parent="Fatchip_Nexi::nexi_api" action="nexi/api_log" resource="Fatchip_Nexi::nexi_api_log"/>
+    </menu>
+</config>
