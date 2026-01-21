@@ -237,12 +237,38 @@
             <global>
                 <cronjob_pending_lifetime>25</cronjob_pending_lifetime>
                 <encryption>blowfish</encryption>
+                <proxy_mode>0</proxy_mode>
             </global>
         </computop_general>
         <computop_payment>
             <computop_creditcard>
+                <mode>iframe</mode>
+                <test_mode>0</test_mode>
+                <capture_method>AUTO</capture_method>
                 <template>nexi_cards_v2</template>
             </computop_creditcard>
+            <computop_directdebit>
+                <request_bic>0</request_bic>
+                <capture_method>AUTO</capture_method>
+            </computop_directdebit>
+            <computop_paypal>
+                <express_active>0</express_active>
+                <capture_method>AUTO</capture_method>
+            </computop_paypal>
+            <computop_ideal>
+                <service>direct</service>
+            </computop_ideal>
+            <computop_amazonpay>
+                <button_color>Gold</button_color>
+                <marketplace_country_code>EU</marketplace_country_code>
+                <capture_method>AUTO</capture_method>
+            </computop_amazonpay>
+            <computop_ratepay_directdebit>
+                <request_bic>0</request_bic>
+            </computop_ratepay_directdebit>
+            <computop_przelewy24>
+                <service>direct</service>
+            </computop_przelewy24>
         </computop_payment>
     </default>
 </config>
