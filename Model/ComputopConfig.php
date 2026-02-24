@@ -22,6 +22,7 @@ abstract class ComputopConfig
     const METHOD_RATEPAY_DIRECTDEBIT = 'computop_ratepay_directdebit';
     const METHOD_RATEPAY_INVOICE = 'computop_ratepay_invoice';
     const METHOD_PRZELEWY24  = 'computop_przelewy24';
+    const METHOD_WERO  = 'computop_wero';
 
     const STATUS_CODE_SUCCESS = '00000000';
 

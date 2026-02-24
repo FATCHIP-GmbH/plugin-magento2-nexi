@@ -232,6 +232,29 @@
                 <can_review_payment>1</can_review_payment>
                 <can_deny_payment>1</can_deny_payment>
             </computop_przelewy24>
+            <computop_wero>
+                <model>Fatchip\Nexi\Model\Method\Wero</model>
+                <title>Nexi Wero</title>
+                <payment_action>authorize</payment_action>
+                <active>0</active>
+                <is_gateway>1</is_gateway>
+                <order_status>pending_payment</order_status>
+                <group>computop</group>
+                <can_use_checkout>1</can_use_checkout>
+                <can_authorize>1</can_authorize>
+                <can_capture>1</can_capture>
+                <can_capture_partial>1</can_capture_partial>
+                <can_authorize_vault>1</can_authorize_vault>
+                <can_capture_vault>1</can_capture_vault>
+                <can_use_internal>1</can_use_internal>
+                <can_refund_partial_per_invoice>1</can_refund_partial_per_invoice>
+                <can_refund>1</can_refund>
+                <can_void>1</can_void>
+                <can_cancel>1</can_cancel>
+                <can_edit>1</can_edit>
+                <can_review_payment>1</can_review_payment>
+                <can_deny_payment>1</can_deny_payment>
+            </computop_wero>
         </payment>
         <computop_general>
             <global>

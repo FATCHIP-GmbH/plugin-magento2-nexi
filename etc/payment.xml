@@ -36,5 +36,8 @@
         <method name="computop_przelewy24">
             <allow_multiple_address>0</allow_multiple_address>
         </method>
+        <method name="computop_wero">
+            <allow_multiple_address>0</allow_multiple_address>
+        </method>
     </methods>
 </payment>

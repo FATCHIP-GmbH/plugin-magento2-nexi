@@ -252,6 +252,29 @@
             <argument name="methodCode" xsi:type="const">Fatchip\Nexi\Model\ComputopConfig::METHOD_PRZELEWY24</argument>
         </arguments>
     </virtualType>
+    <!-- Wero Config Handler -->
+    <type name="Fatchip\Nexi\Model\Method\Wero">
+        <arguments>
+            <argument name="valueHandlerPool" xsi:type="object">ComputopValueHandlerPoolWero</argument>
+        </arguments>
+    </type>
+    <virtualType name="ComputopValueHandlerPoolWero" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">ComputopConfigValueHandlerWero</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopConfigValueHandlerWero" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">ComputopCreditcardVaultPaymentConfigWero</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ComputopCreditcardVaultPaymentConfigWero" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Fatchip\Nexi\Model\ComputopConfig::METHOD_WERO</argument>
+        </arguments>
+    </virtualType>
     <!-- END - PAYMENT CONFIG -->
 
     <!-- START - Session proxies -->

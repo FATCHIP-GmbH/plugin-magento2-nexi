@@ -22,6 +22,7 @@ class Payment extends Base
         ComputopConfig::METHOD_RATEPAY_DIRECTDEBIT,
         ComputopConfig::METHOD_RATEPAY_INVOICE,
         ComputopConfig::METHOD_PRZELEWY24,
+        ComputopConfig::METHOD_WERO,
     ];
 
     /**

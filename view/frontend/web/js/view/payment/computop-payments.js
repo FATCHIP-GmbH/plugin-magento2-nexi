@@ -48,6 +48,10 @@ define(
             {
                 type: 'computop_przelewy24',
                 component: 'Fatchip_Nexi/js/view/payment/method-renderer/przelewy24-method'
+            },
+            {
+                type: 'computop_wero',
+                component: 'Fatchip_Nexi/js/view/payment/method-renderer/wero-method'
             }
         );
         /** Add view logic here if needed */

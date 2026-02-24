@@ -66,6 +66,7 @@
             <include path="Fatchip_Nexi::system/computop_ratepay_directdebit.xml"/>
             <include path="Fatchip_Nexi::system/computop_ratepay_invoice.xml"/>
             <include path="Fatchip_Nexi::system/computop_przelewy24.xml"/>
+            <include path="Fatchip_Nexi::system/computop_wero.xml"/>
         </section>
     </system>
 </config>
