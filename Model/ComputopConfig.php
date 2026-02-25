@@ -8,7 +8,7 @@ namespace Fatchip\Nexi\Model;
 abstract class ComputopConfig
 {
     /* Module version */
-    const MODULE_VERSION = '1.0.0';
+    const MODULE_VERSION = '1.0.1';
     const MODULE_NAME = 'Fatchip_Nexi';
 
     /* Payment method codes */

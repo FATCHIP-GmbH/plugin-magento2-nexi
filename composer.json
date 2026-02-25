@@ -2,7 +2,7 @@
     "name": "fatchip-gmbh/plugin-magento2-nexi",
     "description": "FATCHIP Nexi Payment Plugin",
     "type": "magento2-module",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "require": {
         "php": ">=7.4.0",
