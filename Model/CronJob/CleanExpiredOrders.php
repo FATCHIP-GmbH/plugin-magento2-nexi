@@ -83,15 +83,18 @@ class CleanExpiredOrders
      */
     protected function getExpiredOrders()
     {
-        $lifetime = $this->baseHelper->getConfigParam('cronjob_pending_lifetime');
+        $lifetime = (int)$this->baseHelper->getConfigParam('cronjob_pending_lifetime');
+        if ($lifetime < 0) {
+            $lifetime = 25; // set to default
+        }
 
         $db = $this->databaseResource->getConnection();
         $select = $db
             ->select()
             ->from($this->databaseResource->getTableName('sales_order_grid'), ['entity_id', 'increment_id'])
             ->where("payment_method LIKE 'computop_%'")
-            ->where(new \Zend_Db_Expr('TIME_TO_SEC(TIMEDIFF(CURRENT_TIMESTAMP, `updated_at`)) >= ' . $lifetime * 60))  // check for $lifetime minutes
-            ->where(new \Zend_Db_Expr('TIME_TO_SEC(TIMEDIFF(CURRENT_TIMESTAMP, `updated_at`)) < ' . (60 * 60 * 24))) // only check for the last 24 hours
+            ->where('TIME_TO_SEC(TIMEDIFF(CURRENT_TIMESTAMP, `updated_at`)) >= ?', ($lifetime * 60))  // check for $lifetime minutes
+            ->where('TIME_TO_SEC(TIMEDIFF(CURRENT_TIMESTAMP, `updated_at`)) < ?', (60 * 60 * 24)) // only check for the last 24 hours
             ->where("status = 'pending_payment'");
         return $db->fetchAll($select);
     }

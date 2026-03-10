@@ -312,6 +312,22 @@ class Base
     }
 
     /**
+     * Sets cURL security options
+     *
+     * @return void
+     */
+    protected function setCurlSecurityOptions()
+    {
+        $this->curl->setOption(CURLOPT_PROTOCOLS, CURLPROTO_HTTPS);
+        $this->curl->setOption(CURLOPT_SSL_VERIFYPEER, true);
+        $this->curl->setOption(CURLOPT_SSL_VERIFYHOST, 2);
+        $this->curl->setOption(CURLOPT_CONNECTTIMEOUT, 30);
+        $this->curl->setOption(CURLOPT_TIMEOUT, 30);
+        $this->curl->setOption(CURLOPT_MAXREDIRS, 0);
+        $this->curl->setOption(CURLOPT_USERAGENT, 'FatchipComputop/1.0 (+https)');
+    }
+
+    /**
      * Send request to given url and decode given response
      *
      * @param  string      $url
@@ -323,6 +339,8 @@ class Base
     protected function handleCurlRequest($url, $requestType, $params, ?Order $order = null)
     {
         $response = null;
+
+        $this->setCurlSecurityOptions();
 
         try {
             $this->curl->post($url, $this->getEncryptedParameters($params));
