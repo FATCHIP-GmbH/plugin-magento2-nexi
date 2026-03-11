@@ -138,10 +138,11 @@ class Base
     {
         if (empty($this->transactionId)) {
             if (!empty($order)) {
-                $this->transactionId = $order->getIncrementId();
+                $transactionId = $order->getIncrementId();
             } else {
-                $this->transactionId = $this->paymentHelper->getTransactionId();
+                $transactionId = $this->paymentHelper->getTransactionId();
             }
+            $this->transactionId = $this->apiHelper->getReferenceNumber($transactionId);
         }
         return $this->transactionId;
     }
