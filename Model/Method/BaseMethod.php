@@ -435,6 +435,10 @@ abstract class BaseMethod extends Adapter
 
         if ($finalizeOrder === true && !$this instanceof RedirectNoOrder) { // RedirectNoOrder methods did not create an order yet
             $this->finalizeOrder($payment, $response);
+        } else {
+            $order = $payment->getOrder();
+            $order->setComputopTransid($response['TransID']);
+            $order->save();
         }
     }
 
@@ -447,6 +451,7 @@ abstract class BaseMethod extends Adapter
     {
         $order = $payment->getOrder();
         $order->setComputopPayid($response['PayID']);
+        $order->setComputopTransid($response['TransID']);
         $order->save();
 
         $this->handleResponseSpecific($payment, $response);
