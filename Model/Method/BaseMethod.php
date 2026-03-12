@@ -437,8 +437,10 @@ abstract class BaseMethod extends Adapter
             $this->finalizeOrder($payment, $response);
         } else {
             $order = $payment->getOrder();
-            $order->setComputopTransid($response['TransID']);
-            $order->save();
+            if (!empty($order)) {
+                $order->setComputopTransid($response['TransID']);
+                $order->save();
+            }
         }
     }
 
