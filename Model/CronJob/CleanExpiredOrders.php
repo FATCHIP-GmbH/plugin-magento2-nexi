@@ -2,13 +2,13 @@
 
 namespace Fatchip\Nexi\Model\CronJob;
 
-use Fatchip\Nexi\Helper\Base;
 use Fatchip\Nexi\Model\Api\Request\Inquire;
 use Magento\Framework\App\ObjectManager;
 use Magento\Sales\Api\OrderManagementInterface;
 use Magento\Store\Model\StoresConfig;
 use Magento\Sales\Model\Order;
 use Magento\Framework\App\ResourceConnection;
+use Fatchip\Nexi\Helper\Order as OrderHelper;
 
 /**
  * Class that provides functionality of cleaning expired quotes by cron
@@ -16,9 +16,9 @@ use Magento\Framework\App\ResourceConnection;
 class CleanExpiredOrders
 {
     /**
-     * @var Base
+     * @var OrderHelper
      */
-    protected $baseHelper;
+    protected $orderHelper;
 
     /**
      * @var OrderManagementInterface
@@ -38,19 +38,18 @@ class CleanExpiredOrders
     protected $databaseResource;
 
     /**
-     * @param Base                          $baseHelper
+     * @param OrderHelper                   $orderHelper
      * @param ResourceConnection            $resource
      * @param Inquire                       $inquireRequest
      * @param OrderManagementInterface|null $orderManagement
      */
     public function __construct(
-        Base                     $baseHelper,
-        ResourceConnection       $resource,
-        Inquire                  $inquireRequest,
+        OrderHelper               $orderHelper,
+        ResourceConnection        $resource,
+        Inquire                   $inquireRequest,
         ?OrderManagementInterface $orderManagement = null
-    )
-    {
-        $this->baseHelper = $baseHelper;
+    ) {
+        $this->orderHelper = $orderHelper;
         $this->databaseResource = $resource;
         $this->inquireRequest = $inquireRequest;
         $this->orderManagement = $orderManagement ?: ObjectManager::getInstance()->get(OrderManagementInterface::class);
@@ -83,15 +82,18 @@ class CleanExpiredOrders
      */
     protected function getExpiredOrders()
     {
-        $lifetime = $this->baseHelper->getConfigParam('cronjob_pending_lifetime');
+        $lifetime = (int)$this->orderHelper->getConfigParam('cronjob_pending_lifetime');
+        if ($lifetime < 0) {
+            $lifetime = 25; // set to default
+        }
 
         $db = $this->databaseResource->getConnection();
         $select = $db
             ->select()
             ->from($this->databaseResource->getTableName('sales_order_grid'), ['entity_id', 'increment_id'])
             ->where("payment_method LIKE 'computop_%'")
-            ->where(new \Zend_Db_Expr('TIME_TO_SEC(TIMEDIFF(CURRENT_TIMESTAMP, `updated_at`)) >= ' . $lifetime * 60))  // check for $lifetime minutes
-            ->where(new \Zend_Db_Expr('TIME_TO_SEC(TIMEDIFF(CURRENT_TIMESTAMP, `updated_at`)) < ' . (60 * 60 * 24))) // only check for the last 24 hours
+            ->where('TIME_TO_SEC(TIMEDIFF(CURRENT_TIMESTAMP, `updated_at`)) >= ?', ($lifetime * 60))  // check for $lifetime minutes
+            ->where('TIME_TO_SEC(TIMEDIFF(CURRENT_TIMESTAMP, `updated_at`)) < ?', (60 * 60 * 24)) // only check for the last 24 hours
             ->where("status = 'pending_payment'");
         return $db->fetchAll($select);
     }
@@ -104,11 +106,18 @@ class CleanExpiredOrders
     public function execute()
     {
         $expiredOrders = $this->getExpiredOrders();
-        foreach ($expiredOrders as $order) {
+        foreach ($expiredOrders as $row) {
             try {
-                $inquireResponse = $this->inquireRequest->getPaymentStatusByTransId($order['increment_id']);
+                $order = $this->orderHelper->getOrderByIncrementId($row['increment_id']);
+
+                $transId = $row['increment_id'];
+                if (!empty($order->getComputopTransid())) {
+                    $transId = $order->getComputopTransid();
+                }
+
+                $inquireResponse = $this->inquireRequest->getPaymentStatusByTransId($transId);
                 if ($this->isPaymentStatusFailed($inquireResponse) === true) {
-                    $this->orderManagement->cancel((int)$order['entity_id']);
+                    $this->orderManagement->cancel((int)$row['entity_id']);
                 }
             } catch (\Exception $e) {
                 // do nothing

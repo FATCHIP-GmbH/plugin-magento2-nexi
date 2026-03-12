@@ -149,6 +149,23 @@ class Api extends Base
     }
 
     /**
+     * @param  string $referenceNumber
+     * @return false|string
+     */
+    public function removePrefixSuffix($referenceNumber)
+    {
+        $prefix = trim($this->getConfigParam('ordernr_prefix') ?? '');
+        $suffix = trim($this->getConfigParam('ordernr_suffix') ?? '');
+        if (substr($referenceNumber, 0, strlen($prefix)) == $prefix) {
+            $referenceNumber = substr($referenceNumber, strlen($prefix));
+        }
+        if (substr($referenceNumber, -strlen($suffix)) == $suffix) {
+            $referenceNumber = substr($referenceNumber, 0, -strlen($suffix));
+        }
+        return $referenceNumber;
+    }
+
+    /**
      * Check if given response has a success response
      *
      * @param  array $response

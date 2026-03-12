@@ -95,7 +95,7 @@ class Index extends \Magento\Framework\App\Action\Action implements CsrfAwareAct
             ];
 
             if (!empty($response['TransID'])) {
-                $order = $this->orderHelper->getOrderByIncrementId($response['TransID']);
+                $order = $this->orderHelper->getOrderByTransId($response['TransID']);
 
                 if (!empty($order)) {
                     $params['order'] = $order;

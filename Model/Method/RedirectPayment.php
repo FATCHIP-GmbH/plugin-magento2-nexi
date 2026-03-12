@@ -119,10 +119,12 @@ abstract class RedirectPayment extends BaseMethod
                 $stateObject->setData('status', 'pending_payment');
             }
 
-            $order->save();
-
             $params = $this->authRequest->getParameters();
             $transactionId = $params['TransID'];
+
+            $order->setComputopTransid($transactionId);
+
+            $order->save();
         }
 
         if ($this->hasTransactionToBeSetPreAuthorization() === true) {

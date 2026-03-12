@@ -35,6 +35,16 @@ class Order extends Base
     protected $orderFactory;
 
     /**
+     * @var \Fatchip\Nexi\Helper\Database
+     */
+    protected $databaseHelper;
+
+    /**
+     * @var \Fatchip\Nexi\Helper\Api
+     */
+    protected $apiHelper;
+
+    /**
      * Constructor
      *
      * @param \Magento\Framework\App\Helper\Context      $context
@@ -43,6 +53,8 @@ class Order extends Base
      * @param InvoiceService                             $invoiceService
      * @param InvoiceSender                              $invoiceSender
      * @param \Magento\Sales\Model\OrderFactory          $orderFactory
+     * @param \Fatchip\Nexi\Helper\Database              $databaseHelper
+     * @param \Fatchip\Nexi\Helper\Api                   $apiHelper
      */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
@@ -50,12 +62,16 @@ class Order extends Base
         \Magento\Framework\App\State $state,
         InvoiceService $invoiceService,
         InvoiceSender $invoiceSender,
-        \Magento\Sales\Model\OrderFactory $orderFactory
+        \Magento\Sales\Model\OrderFactory $orderFactory,
+        \Fatchip\Nexi\Helper\Database $databaseHelper,
+        \Fatchip\Nexi\Helper\Api $apiHelper
     ) {
         parent::__construct($context, $storeManager, $state);
         $this->invoiceService = $invoiceService;
         $this->invoiceSender = $invoiceSender;
         $this->orderFactory = $orderFactory;
+        $this->databaseHelper = $databaseHelper;
+        $this->apiHelper = $apiHelper;
     }
 
     /**
@@ -69,6 +85,19 @@ class Order extends Base
             return $order;
         }
         return null;
+    }
+
+    /**
+     * @param string $transId
+     * @return CoreOrder|null
+     */
+    public function getOrderByTransId($transId)
+    {
+        $incrementId = $this->databaseHelper->getIncrementIdByTransId($transId);
+        if (empty($incrementId)) {
+            $incrementId = $this->apiHelper->removePrefixSuffix($transId);
+        }
+        return $this->getOrderByIncrementId($incrementId);
     }
 
     /**
