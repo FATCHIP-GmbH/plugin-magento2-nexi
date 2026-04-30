@@ -7,6 +7,8 @@
     <preference for="Fatchip\Nexi\Api\Data\StartPayPalExpressResponseInterface" type="Fatchip\Nexi\Service\V1\Data\StartPayPalExpressResponse" />
     <preference for="Fatchip\Nexi\Api\AmazonPayInterface" type="Fatchip\Nexi\Service\V1\AmazonPay" />
     <preference for="Fatchip\Nexi\Api\Data\AmazonPayResponseInterface" type="Fatchip\Nexi\Service\V1\Data\AmazonPayResponse" />
+    <preference for="Fatchip\Nexi\Api\DeviceFingerprintSentInterface" type="Fatchip\Nexi\Service\V1\DeviceFingerprintSent" />
+    <preference for="Fatchip\Nexi\Api\Data\DeviceFingerprintSentResponseInterface" type="Fatchip\Nexi\Service\V1\Data\DeviceFingerprintSentResponse" />
     <!-- END - REST API PREFERENCES -->
 
     <!-- START - PAYMENT CONFIG -->
