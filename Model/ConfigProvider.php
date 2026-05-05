@@ -108,6 +108,11 @@ class ConfigProvider implements ConfigProviderInterface
             if ($methodInstance instanceof BaseMethod && $methodInstance->isAvailable()) {
                 $config['payment']['computop'][$methodCode] = $methodInstance->getFrontendConfig();
                 $config['payment']['instructions'][$methodCode] = $this->getInstructionByCode($methodInstance);
+
+                if ($methodInstance instanceof Method\Ratepay\Base && !isset($config['payment']['computop']['ratepay'])) {
+                    // Special handling because it is only needed once
+                    $config['payment']['computop']['ratepay'] = $methodInstance->getDeviceFingerprintConfig();
+                }
             }
         }
         return $config;

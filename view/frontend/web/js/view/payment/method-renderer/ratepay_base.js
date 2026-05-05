@@ -3,11 +3,42 @@ define(
         'Fatchip_Nexi/js/view/payment/method-renderer/base',
         'Magento_Checkout/js/model/quote',
         'Magento_Customer/js/model/customer',
+        'Magento_Checkout/js/checkout-data',
+        'Fatchip_Nexi/js/action/dfpsent',
         'mage/translate'
     ],
-    function (Component, quote, customer, $t) {
+    function (Component, quote, customer, checkoutData, markDfpAsSent, $t) {
         'use strict';
         return Component.extend({
+            initialize: function () {
+                let parentReturn = this._super();
+                if (checkoutData.getSelectedPaymentMethod() === this.getCode()) {
+                    this.handleDeviceFingerprint();
+                }
+                return parentReturn;
+            },
+            selectPaymentMethod: function () {
+                this.handleDeviceFingerprint();
+                return this._super();
+            },
+            handleDeviceFingerprint: function () {
+                if (window.checkoutConfig.payment.computop.ratepay.token) {
+                    window.di = {
+                        t: window.checkoutConfig.payment.computop.ratepay.token,
+                        v: window.checkoutConfig.payment.computop.ratepay.snippetId,
+                        l:'checkout'
+                    };
+
+                    var diScript = document.createElement('script');
+                    diScript.type = 'text/javascript';
+                    diScript.src = '//d.ratepay.com/' + window.checkoutConfig.payment.computop.ratepay.snippetId + '/di.js';
+                    document.getElementsByTagName('head')[0].appendChild(diScript);
+
+                    window.checkoutConfig.payment.computop.ratepay.token = false;
+
+                    markDfpAsSent();
+                }
+            },
             isBirthdaySet: function () {
                 if (customer.customerData.dob == undefined || customer.customerData.dob === null) {
                     return false;

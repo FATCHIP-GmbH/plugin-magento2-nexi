@@ -4,14 +4,18 @@ namespace Fatchip\Nexi\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer;
-use Magento\Checkout\Model\Session;
 
 class OrderPaymentPlaceEnd implements ObserverInterface
 {
     /**
-     * @var Session
+     * @var \Magento\Checkout\Model\Session
      */
     protected $checkoutSession;
+
+    /**
+     * @var \Magento\Customer\Model\Session
+     */
+    protected $customerSession;
 
     /**
      * @var string[]
@@ -27,19 +31,27 @@ class OrderPaymentPlaceEnd implements ObserverInterface
         'computop_quote_comparison_string',
         'computop_no_order_redirect_response',
         'computop_easy_credit_dob',
+        'computop_ratepay_dfp_sent',
         #'computop_easy_credit_info',
         #'computop_easy_credit_confirm_response',
+    ];
+
+    protected $customerSessionCleanParams = [
+        'computop_rate_pay_device_ident_token',
     ];
 
     /**
      * Constructor
      *
-     * @param Session $checkoutSession
+     * @param \Magento\Checkout\Model\Session $checkoutSession
+     * @param \Magento\Customer\Model\Session $customerSession
      */
     public function __construct(
-        Session $checkoutSession
+        \Magento\Checkout\Model\Session $checkoutSession,
+        \Magento\Customer\Model\Session $customerSession
     ) {
         $this->checkoutSession = $checkoutSession;
+        $this->customerSession = $customerSession;
     }
 
     /**
@@ -53,6 +65,16 @@ class OrderPaymentPlaceEnd implements ObserverInterface
     }
 
     /**
+     * @return void
+     */
+    protected function clearCustomerSession()
+    {
+        foreach ($this->customerSessionCleanParams as $cleanParam) {
+            $this->customerSession->unsetData($cleanParam);
+        }
+    }
+
+    /**
      * Execute certain tasks after the payment is placed and thus the order is placed
      *
      * @param  Observer $observer
@@ -61,5 +83,6 @@ class OrderPaymentPlaceEnd implements ObserverInterface
     public function execute(Observer $observer)
     {
         $this->clearCheckoutSession();
+        $this->clearCustomerSession();
     }
 }

@@ -87,6 +87,11 @@ abstract class Base extends ServerToServerPayment
     ];
 
     /**
+     * @var \Magento\Customer\Model\Session
+     */
+    protected $customerSession;
+
+    /**
      * @param ManagerInterface $eventManager
      * @param ValueHandlerPoolInterface $valueHandlerPool
      * @param PaymentDataObjectFactory $paymentDataObjectFactory
@@ -106,6 +111,7 @@ abstract class Base extends ServerToServerPayment
      * @param RefNrChange $refNrChange
      * @param \Fatchip\Nexi\Helper\Api $apiHelper
      * @param Environment $environmentHelper
+     * @param \Magento\Customer\Model\Session $customerSession
      * @param CommandPoolInterface|null $commandPool
      * @param ValidatorPoolInterface|null $validatorPool
      * @param CommandManagerInterface|null $commandExecutor
@@ -131,6 +137,7 @@ abstract class Base extends ServerToServerPayment
         InvoiceSender $invoiceSender,
         RefNrChange $refNrChange,
         Environment $environmentHelper,
+        \Magento\Customer\Model\Session $customerSession,
         ?CommandPoolInterface $commandPool = null,
         ?ValidatorPoolInterface $validatorPool = null,
         ?CommandManagerInterface $commandExecutor = null,
@@ -138,6 +145,7 @@ abstract class Base extends ServerToServerPayment
     ) {
         parent::__construct($eventManager, $valueHandlerPool, $paymentDataObjectFactory, $code, $formBlockType, $infoBlockType, $urlBuilder, $authRequest, $checkoutSession, $paymentHelper, $apiHelper, $captureRequest, $creditRequest, $invoiceService, $orderSender, $invoiceSender, $refNrChange, $commandPool, $validatorPool, $commandExecutor, $logger);
         $this->environmentHelper = $environmentHelper;
+        $this->customerSession = $customerSession;
     }
 
     /**
@@ -332,6 +340,7 @@ abstract class Base extends ServerToServerPayment
             'shoppingBasket' => $this->apiHelper->encodeArray($this->getShoppingBasket($order)),
             'IPAddr' => $this->environmentHelper->getRemoteIp(),
             'Language' => $this->environmentHelper->getLocale(),
+            'DeviceToken' => $this->customerSession->getComputopRatePayDeviceIdentToken(),
         ];
 
         $birthday = $this->getBirthday($this->getInfoInstance(), $order);
@@ -367,5 +376,56 @@ abstract class Base extends ServerToServerPayment
             */
         }
         return $params;
+    }
+
+    /**
+     * Read snippet_id from config
+     *
+     * @return string
+     */
+    protected function getSnippetId()
+    {
+        $snippetId = $this->paymentHelper->getConfigParam('snippet_id', 'computop_ratepay', 'computop_payment', $this->getStoreCode());
+        if (empty($snippetId)) {
+            $snippetId = "C9rKgOt";
+        }
+        return $snippetId;
+    }
+
+    /**
+     * Returns device fingerprint token
+     *
+     * @return string
+     */
+    protected function getToken()
+    {
+        $dfpSessionToken = $this->customerSession->getComputopRatePayDeviceIdentToken();
+        if (empty($dfpSessionToken)) {
+            $dfpSessionToken = $this->createToken($this->customerSession->getSessionId());
+            $this->customerSession->setComputopRatePayDeviceIdentToken($dfpSessionToken);
+        }
+        return $dfpSessionToken;
+    }
+
+    /**
+     * Creates unique token.
+     *
+     * @param $uniqueIdentifier
+     */
+    protected function createToken($uniqueIdentifier)
+    {
+        return md5($this->getSnippetId() . '_' . $uniqueIdentifier . '_' . microtime());
+    }
+
+    /**
+     * @return array
+     */
+    public function getDeviceFingerprintConfig()
+    {
+        $tokenNeeded = ($this->checkoutSession->getComputopRatepayDfpSent() !== true);
+        return [
+            'token' => $tokenNeeded ? $this->getToken() : false,
+            'snippetId' => $this->getSnippetId(),
+        ];
     }
 }

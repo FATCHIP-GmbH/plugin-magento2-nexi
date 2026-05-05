@@ -10,12 +10,14 @@
         <policy id="script-src">
             <values>
                 <value id="computop_amazon" type="host">static-eu.payments-amazon.com</value>
+                <value id="computop_ratepay_script" type="host">d.ratepay.com</value>
             </values>
         </policy>
         <policy id="connect-src">
             <values>
                 <value id="computop_connect_src" type="host">www.computop-paygate.com</value>
                 <value id="computop_amazon_pay" type="host">payments-eu.amazon.com</value>
+                <value id="computop_ratepay_connect" type="host">d.ratepay.com</value>
             </values>
         </policy>
         <policy id="frame-src">

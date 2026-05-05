@@ -66,8 +66,8 @@ class DirectDebit extends Base
      */
     public function getFrontendConfig()
     {
-        return [
-            'requestBic' => (bool)$this->getPaymentConfigParam('request_bic'),
-        ];
+        $config = parent::getFrontendConfig();
+        $config['requestBic'] = (bool)$this->getPaymentConfigParam('request_bic');
+        return $config;
     }
 }

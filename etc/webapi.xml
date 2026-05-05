@@ -50,4 +50,11 @@
             <parameter name="cartId" force="true">%cartId%</parameter>
         </data>
     </route>
+
+    <route url="/V1/carts/mine/computop-dfpSent" method="POST">
+        <service class="Fatchip\Nexi\Api\DeviceFingerprintSentInterface" method="markDfpAsSent"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
 </routes>
