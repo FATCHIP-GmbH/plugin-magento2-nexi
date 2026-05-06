@@ -173,21 +173,17 @@ class Api extends Base
      */
     public function isSuccessStatus($response)
     {
-        if (isset($response['Code']) && ($response['Code'] == ComputopConfig::STATUS_CODE_SUCCESS || substr($response['Code'], 0, 1) == '0')) { # 0 = Ok, 2 = Error, 4 = Fatal Error
-            return true;
+        if(isset($response['Code']) === false) {
+            return false;
         }
-        return false;
-    }
 
-    /**
-     * Check if given response has a pending response
-     *
-     * @param  array $response
-     * @return bool
-     */
-    public function isPendingStatus($response)
-    {
-        if (isset($response['Status']) && ($response['Status'] == ComputopConfig::STATUS_PENDING || substr($response['Code'], 0, 1) == '6')) { # 6 = Pending
+        $successCodes = [
+            "0", // Ok
+            "6", // Pending/Temporary state
+        ];
+
+        $responseCode = substr($response['Code'], 0, 1);
+        if (in_array($responseCode, $successCodes)) {
             return true;
         }
         return false;
