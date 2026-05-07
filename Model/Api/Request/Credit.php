@@ -74,7 +74,7 @@ class Credit extends Base
         if (empty($response)) {
             throw new \Exception("An unknown error occured.");
         }
-        if ($this->apiHelper->isSuccessStatus($response) === false && $this->apiHelper->isPendingStatus($response) !== true) {
+        if ($this->apiHelper->isSuccessStatus($response) === false) {
             $error = "An error occured";
             if (isset($response['Description'])) {
                 $error .= ": ".strtolower($response['Description']);
