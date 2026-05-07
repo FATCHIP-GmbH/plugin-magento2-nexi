@@ -1,4 +1,9 @@
 # Changelog - nexi Paygate for Magento 2
+### 1.0.3
+Released 2026-05-08
+* security hardening
+* Added pre- and suffix to transID
+
 ### 1.0.2
 Released 2026-03-12
 * security hardening
