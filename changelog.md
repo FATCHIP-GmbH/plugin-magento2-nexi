@@ -1,8 +1,9 @@
 # Changelog - nexi Paygate for Magento 2
 ### 1.0.3
 Released 2026-05-08
-* security hardening
-* Added pre- and suffix to transID
+* Implemented DeviceToken mechanic for Ratepay payment methods
+* Changed success status detection
+* Fixed problem with creditcard silent mode
 
 ### 1.0.2
 Released 2026-03-12

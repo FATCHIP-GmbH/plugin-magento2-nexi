@@ -55,7 +55,7 @@ define(
                 return parentReturn;
             },
             updateExpiryDate: function () {
-                this.expiryDate(this.expiryYear() + this.expiryMonth());
+                this.expiryDate(String(this.expiryYear()) + String(this.expiryMonth()));
             },
             isSilentMode: function () {
                 if (this.getFrontendConfigParam('mode') === 'silent') {
