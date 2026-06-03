@@ -89,8 +89,10 @@ class Blowfish extends Base
 
     protected function int2asc($int)
     {
-        return chr($int >> 24) . chr(($int >> 16) & 0xff) .
-            chr(($int >> 8) & 0xff) . chr($int & 0xff);
+        return chr(($int >> 24) & 0xff)
+            . chr(($int >> 16) & 0xff)
+            . chr(($int >> 8) & 0xff)
+            . chr($int & 0xff);
     }
 
     protected function expand($text)
