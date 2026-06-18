@@ -1,4 +1,9 @@
 # Changelog - nexi Paygate for Magento 2
+
+### 1.0.4
+Released 2026-06-18
+* Added compatibility to Magento 2.4.9 and PHP 8.5
+
 ### 1.0.3
 Released 2026-05-08
 * Implemented DeviceToken mechanic for Ratepay payment methods
