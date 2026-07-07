@@ -285,7 +285,7 @@ class PayPal extends RedirectPayment
     }
 
     /**
-     * @return double
+     * @return float
      */
     public function getPayPalExpressDefaultDeliveryCosts()
     {
@@ -295,6 +295,6 @@ class PayPal extends RedirectPayment
         if (!is_numeric($dDefaultDeliveryCosts)) {
             $dDefaultDeliveryCosts = 0;
         }
-        return (double)$dDefaultDeliveryCosts;
+        return (float)$dDefaultDeliveryCosts;
     }
 }
