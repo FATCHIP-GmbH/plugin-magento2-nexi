@@ -283,4 +283,18 @@ class PayPal extends RedirectPayment
         }
         return $this->useInitializeStep;
     }
+
+    /**
+     * @return double
+     */
+    public function getPayPalExpressDefaultDeliveryCosts()
+    {
+        $dDefaultDeliveryCosts = (string)$this->getPaymentConfigParam('express_default_shipping_costs');
+        $dDefaultDeliveryCosts = str_replace(',', '.', $dDefaultDeliveryCosts);
+
+        if (!is_numeric($dDefaultDeliveryCosts)) {
+            $dDefaultDeliveryCosts = 0;
+        }
+        return (double)$dDefaultDeliveryCosts;
+    }
 }
