@@ -4,6 +4,7 @@ namespace Fatchip\Nexi\Model\Api\Request;
 
 use Fatchip\Nexi\Model\ComputopConfig;
 use Fatchip\Nexi\Model\Method\BaseMethod;
+use Fatchip\Nexi\Model\Method\PayPal;
 use Magento\Sales\Model\Order;
 use Magento\Sales\Model\Order\Payment;
 use Magento\Sales\Model\Order\Address as OrderAddress;
@@ -138,6 +139,12 @@ class Authorization extends Base
     public function generateRequestFromQuote(Quote $quote, BaseMethod $methodInstance, $encrypt = false, $log = false)
     {
         $amount = $quote->getGrandTotal();
+
+        $totals = $quote->getTotals();
+        if ($methodInstance instanceof PayPal && (!isset($totals['shipping']) || $totals['shipping']->getValue() == 0)) {
+            $amount += $methodInstance->getPayPalExpressDefaultDeliveryCosts();
+        }
+
         $currency = $quote->getQuoteCurrencyCode();
         $refNr = $methodInstance->getTemporaryRefNr($quote->getId());
 

@@ -361,4 +361,7 @@
     <type name="Magento\Sales\Model\Service\CreditmemoService">
         <plugin name="computop_payment_plugin_creditmemoservice" type="Fatchip\Nexi\Plugin\CreditmemoService" sortOrder="1" />
     </type>
+    <type name="Magento\Quote\Model\CustomerManagement">
+        <plugin name="computop_payment_skip_addresses_validate" type="Fatchip\Nexi\Plugin\CustomerManagementPlugin" sortOrder="5"/>
+    </type>
 </config>

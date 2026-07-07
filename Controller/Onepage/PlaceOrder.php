@@ -121,7 +121,7 @@ class PlaceOrder extends \Magento\Framework\App\Action\Action
         }
 
         // Processing shouldn't land here, an error occured if it does - so redirect to cart instead of showing a white page
-        $this->messageManager->addErrorMessage('An error occured during the Checkout. X');
+        $this->messageManager->addErrorMessage('An error occured during the Checkout.');
         $this->_redirect('checkout/cart');
     }
 

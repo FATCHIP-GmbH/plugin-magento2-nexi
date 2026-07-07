@@ -15,6 +15,14 @@
             <label>PayPal Express active</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
         </field>
+        <field id="express_default_shipping_costs" translate="label,tooltip" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>PayPal Express default shipping costs</label>
+            <tooltip>This is used for PayPal Express orders. Since when clicking the PayPal Express button, the customer did not choose a delivery method yet, we don't know the payment cost at the beginning. So initially no shipping costs are communicated to PayPal. Later - when the address is known - the shipping costs are added to the order sum and communicated to PayPal, PayPal sends an error because the order sum changed too much (15% tolerance). This default shipping costs will be used for the first price communication to PayPal, to prevent the price mismatch error later.</tooltip>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <depends>
+                <field id="express_active">1</field>
+            </depends>
+        </field>
         <field id="express_livemode" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>PayPal Express Live Mode</label>
             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
