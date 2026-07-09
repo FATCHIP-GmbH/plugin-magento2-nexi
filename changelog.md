@@ -1,5 +1,9 @@
 # Changelog - nexi Paygate for Magento 2
 
+### 1.0.5
+Released 2026-07-09
+* Added PayPal Express default shipping cost config
+
 ### 1.0.4
 Released 2026-06-18
 * Added compatibility to Magento 2.4.9 and PHP 8.5
