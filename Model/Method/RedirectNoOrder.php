@@ -23,6 +23,11 @@ abstract class RedirectNoOrder extends RedirectPayment
     protected $useInitializeStep = false;
 
     /**
+     * @var bool
+     */
+    protected $isCancelationNeededOnFailure = false;
+
+    /**
      * Returns if auth request is needed
      * Can be overloaded by other classes
      *

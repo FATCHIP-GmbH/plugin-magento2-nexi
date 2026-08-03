@@ -2,6 +2,7 @@
 
 namespace Fatchip\Nexi\Controller\Onepage;
 
+use Fatchip\Nexi\Model\Method\BaseMethod;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\App\CsrfAwareActionInterface;
 use Magento\Framework\App\Request\InvalidRequestException;
@@ -129,12 +130,15 @@ class Failure extends \Magento\Framework\App\Action\Action implements CsrfAwareA
                 if ($order) {
                     $this->handleOrder($order);
 
-                    $order->cancel()->save();
-                    $this->checkoutSession->restoreQuote();
-                    $this->checkoutSession
-                        ->unsLastQuoteId()
-                        ->unsLastSuccessQuoteId()
-                        ->unsLastOrderId();
+                    $methodInstance = $order->getPayment()->getMethodInstance();
+                    if ($methodInstance instanceof BaseMethod && $methodInstance->isCancelationNeededOnFailure() === true) {
+                        $order->cancel()->save();
+                        $this->checkoutSession->restoreQuote();
+                        $this->checkoutSession
+                            ->unsLastQuoteId()
+                            ->unsLastSuccessQuoteId()
+                            ->unsLastOrderId();
+                    }
                 }
             }
 
