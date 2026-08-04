@@ -1,5 +1,9 @@
 # Changelog - nexi Paygate for Magento 2
 
+### 1.0.6
+Released 2026-08-05
+* Changed order handling with browser back/forward buttons
+
 ### 1.0.5
 Released 2026-07-09
 * Added PayPal Express default shipping cost config
