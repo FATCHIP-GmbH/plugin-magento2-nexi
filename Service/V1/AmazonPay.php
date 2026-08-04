@@ -55,6 +55,8 @@ class AmazonPay implements AmazonPayInterface
 
             $response->setData('payload', $payload);
             $response->setData('signature', $signature);
+
+            $this->checkoutSession->setComputopCustomerIsRedirected(true);
         }
 
         $this->checkoutSession->unsComputopAmazonPayPayload();

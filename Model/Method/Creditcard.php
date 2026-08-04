@@ -46,6 +46,11 @@ class Creditcard extends RedirectPayment
     protected $addLanguageToUrl = true;
 
     /**
+     * @var bool
+     */
+    protected $isCancelationNeededOnFailure = false;
+
+    /**
      * Returns the API endpoint
      *
      * @return string

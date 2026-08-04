@@ -172,6 +172,11 @@ abstract class BaseMethod extends Adapter
     protected $addLanguageToUrl = false;
 
     /**
+     * @var bool
+     */
+    protected $isCancelationNeededOnFailure = true;
+
+    /**
      * @param ManagerInterface $eventManager
      * @param ValueHandlerPoolInterface $valueHandlerPool
      * @param PaymentDataObjectFactory $paymentDataObjectFactory
@@ -286,6 +291,14 @@ abstract class BaseMethod extends Adapter
     public function isShippingAddressDataNeeded()
     {
         return $this->addShippingAddressData;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCancelationNeededOnFailure()
+    {
+        return $this->isCancelationNeededOnFailure;
     }
 
     /**
