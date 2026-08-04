@@ -58,6 +58,11 @@ class AmazonPay extends ServerToServerPayment
     protected $useInitializeStep = true;
 
     /**
+     * @var bool
+     */
+    protected $isCancelationNeededOnFailure = false;
+
+    /**
      * Can be used to assign data from frontend to info instance
      *
      * @var array
